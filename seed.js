@@ -1,0 +1,41 @@
+// Fills the database with sample study sessions.
+// Run with:            node seed.js
+// Wipe and re-seed:    node seed.js --reset
+
+const db = require('./database');
+
+const sampleSessions = [
+  { course_name: 'CSS 390', student_name: 'Maya', availability: 'Tue/Thu after 4pm' },
+  { course_name: 'CSS 390', student_name: 'Jordan', availability: 'Weekday mornings' },
+  { course_name: 'MATH 208', student_name: 'Priya', availability: 'Mon/Wed 2-5pm' },
+  { course_name: 'MATH 208', student_name: 'Sam', availability: 'Sunday evenings' },
+  { course_name: 'BIO 180', student_name: 'Lena', availability: 'Fri afternoons' },
+  { course_name: 'ENGL 101', student_name: null, availability: null },
+];
+
+if (process.argv.includes('--reset')) {
+  db.prepare('DELETE FROM sessions').run();
+  console.log('Cleared existing sessions.');
+}
+
+const { count } = db.prepare('SELECT COUNT(*) AS count FROM sessions').get();
+
+if (count > 0) {
+  console.log(`Table already has ${count} row(s). Skipping seed.`);
+  console.log('Run "node seed.js --reset" to clear it and seed again.');
+  process.exit(0);
+}
+
+const insert = db.prepare(
+  'INSERT INTO sessions (course_name, student_name, availability) VALUES (?, ?, ?)'
+);
+
+// Run all inserts as one transaction: either all rows are added or none are.
+const insertAll = db.transaction((rows) => {
+  for (const row of rows) {
+    insert.run(row.course_name, row.student_name, row.availability);
+  }
+});
+
+insertAll(sampleSessions);
+console.log(`Added ${sampleSessions.length} sample sessions.`);
