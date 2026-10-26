@@ -85,6 +85,16 @@ form.addEventListener('submit', async(event) => {
           form.course_name.focus();
           return;
      }
+     if (!payload.student_name) {
+          setFormMessage('Enter your name.', 'error');
+          form.student_name.focus();
+          return;
+     }
+     if (!payload.availability) {
+          setFormMessage('Enter your availability.', 'error');
+          form.availability.focus();
+          return;
+     }
 
      const button = form.querySelector('button');
      // don't allow double-clicking
