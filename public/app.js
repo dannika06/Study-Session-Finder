@@ -66,8 +66,13 @@ async function loadCourses() {
           courses = await res.json();
           render()
      } catch (err) {
+          courses = [
+               { course_name: 'CS396', student_name: 'Alex', availability: 'Tuesday 3–5 pm' },
+               { course_name: 'CS396', student_name: 'Sam', availability: 'Tuesday 3–5 pm' }
+          ];
+          render();
           emptyMessage.hidden = false;
-          emptyMessage.textContent = 'Could not load sessions. Check that the server is running.';
+          emptyMessage.textContent = 'Could not load sessions. Showing sample data. Check that the server is running.';
      }
 }
 
