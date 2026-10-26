@@ -1,26 +1,25 @@
 {
-  "name": "cs396",
+  "name": "study-session-finder",
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "description": "A simple web app that lets students post and find study sessions",
+  "main": "server.js",
   "scripts": {
     "test": "node --check server.js && node --check public/app.js",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dannika06/CS396.git"
+    "url": "git+https://github.com/dannika06/Study-Session-Finder.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dannika06/CS396/issues"
+    "url": "https://github.com/dannika06/Study-Session-Finder/issues"
   },
-  "homepage": "https://github.com/dannika06/CS396#readme",
+  "homepage": "https://github.com/dannika06/Study-Session-Finder#readme",
   "dependencies": {
     "better-sqlite3": "^13.0.3",
     "express": "^5.3.0"
-  },
-  "devDependencies": {}
+  }
 }
