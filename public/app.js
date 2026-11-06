@@ -54,7 +54,21 @@ function render() {
           whenLabel.textContent = 'Available: ';
           when.append(whenLabel, c.availability || 'Not provided');
 
-          item.append(title, who, when);
+          // Delete session
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = 'Delete';
+          deleteBtn.style.marginTop = '0.5rem';
+          deleteBtn.addEventListener('click', async () => {
+               if (!confirm('Delete this session?')) return;
+               try {
+                    const res = await fetch(`/api/courses/${c.id}`, { method: 'DELETE' });
+                    if (!res.ok) throw new Error('Could not delete');
+                    await loadCourses();
+               } catch (err) {
+                    alert('Could not delete session');
+               }
+          });
+          item.append(title, who, when, deleteBtn);
           list.append(item);
      }
 }

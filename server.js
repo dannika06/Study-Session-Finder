@@ -32,6 +32,19 @@ app.get('/api/courses', (req, res) => {
   res.json(rows);
 });
 
+// DELETE a session
+app.delete('/api/courses/:id', (req, res) => {
+  const { id } = req.params;
+
+  const result = db.prepare('DELETE FROM sessions WHERE id = ?').run(id);
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'Session not found' });
+  }
+
+  res.json({ success: true });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
