@@ -54,7 +54,12 @@ function render() {
           whenLabel.textContent = 'Available: ';
           when.append(whenLabel, c.availability || 'Not provided');
 
-          item.append(title, who, when);
+          const reach = document.createElement('p');
+          const reachLabel = document.createElement('strong');
+          reachLabel.textContent = 'Contact: ';
+          reach.append(reachLabel, c.contact || 'Not provided');
+
+          item.append(title, who, when, reach);
           list.append(item);
      }
 }
@@ -83,6 +88,7 @@ form.addEventListener('submit', async(event) => {
           course_name: form.course_name.value.trim(),
           student_name: form.student_name.value.trim(),
           availability: form.availability.value.trim(),
+          contact: form.contact.value.trim(),
      };
 
      if (!payload.course_name) {

@@ -24,21 +24,26 @@ function requireLogin(req, res, next) {
 app.post('/api/courses', requireLogin, (req, res) => {
   const { course_name, student_name, availability } = req.body;
 
-  if (!course_name) {
-    return res.status(400).json({ error: 'course_name is required' });
+    if (typeof course_name !== 'string' || !course_name.trim()) {
+      return res.status(400).json({ error: 'course_name is required' });
+    }
+
+    const stmt = db.prepare(
+      'INSERT INTO sessions (course_name, student_name, availability, contact) VALUES (?, ?, ?, ?)'
+    );
+    const result = stmt.run(course_name.trim(), student_name || null, availability || null, contact || null);
+
+    res.status(201).json({
+      id: Number(result.lastInsertRowid),
+      course_name: course_name.trim(),
+      student_name,
+      availability,
+      contact
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
   }
-
-  const stmt = db.prepare(
-    'INSERT INTO sessions (course_name, student_name, availability) VALUES (?, ?, ?)'
-  );
-  const result = stmt.run(course_name, student_name || null, availability || null);
-
-  res.json({
-    id: result.lastInsertRowid,
-    course_name,
-    student_name,
-    availability
-  });
 });
 
 // FIND all courses
