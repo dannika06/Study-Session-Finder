@@ -10,6 +10,7 @@ db.exec(`
     course_name TEXT NOT NULL,
     student_name TEXT,
     availability TEXT,
+    contact TEXT,
     status TEXT DEFAULT 'open'
   )
 `);
