@@ -113,6 +113,11 @@ form.addEventListener('submit', async(event) => {
                body: JSON.stringify(payload),
           });
 
+          if (res.status === 401) {
+          window.location.href = '/login.html';
+          return;
+          }
+
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || 'Could not add session');
 
