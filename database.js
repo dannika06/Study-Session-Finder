@@ -11,7 +11,7 @@ db.exec(`
     student_name TEXT,
     availability TEXT,
     contact TEXT,
-    status TEXT DEFAULT 'open'
+    status TEXT DEFAULT 'open',
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id)
   );
