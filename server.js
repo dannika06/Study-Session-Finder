@@ -23,7 +23,7 @@ function requireLogin(req, res, next) {
 // CREATE a course
 app.post('/api/courses', requireLogin, (req, res) => {
   try { 
-      const { course_name, student_name, availability } = req.body;
+    const { course_name, student_name, availability, contact } = req.body;
 
     if (typeof course_name !== 'string' || !course_name.trim()) {
       return res.status(400).json({ error: 'course_name is required' });
